@@ -10,6 +10,14 @@ function Tile(props) {
       <img src={props.imgLink} />
     </React.Fragment>
   );
+  
 }
+
+Tile.propTypes = {
+  name: PropTypes.string,
+  price: PropTypes.number,
+  quantity: PropTypes.number,
+  imgLink: PropTypes.string
+};
 
 export default Tile;

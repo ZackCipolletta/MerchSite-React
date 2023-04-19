@@ -27,7 +27,7 @@ import PropTypes from "prop-types";
 function ProductList(props) {
   return (
     <React.Fragment>
-      {props.producList.map((product, index) =>
+      {props.productList.map((product, index) =>
         <Tile price={product.price}
           quantity={product.quantity}
           imgLink={product.imgLink}
@@ -39,7 +39,7 @@ function ProductList(props) {
 }
 
 ProductList.propTypes = {
-  producList: PropTypes.array
+  productList: PropTypes.array
 };
 
 export default ProductList;
