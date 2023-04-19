@@ -3,6 +3,30 @@ import Tile from "./ProductTile";
 import PropTypes from "prop-types";
 
 
+function ProductList(props) {
+  return (
+    <React.Fragment>
+      {props.productList.map((product, index) =>
+        <Tile price={product.price}
+          quantity={product.quantity}
+          imgLink={product.imgLink}
+          name={product.name}
+          id={product.id}
+          key={index}
+          onAddProductToCart={props.onAddProductToCart}
+          onDeleteProduct={props.onDeleteProduct}
+        />
+      )}
+    </React.Fragment>
+  );
+}
+
+ProductList.propTypes = {
+  productList: PropTypes.array
+};
+
+export default ProductList;
+
 // const tileList = [
 //   {
 //     name: "Headphones",
@@ -23,23 +47,3 @@ import PropTypes from "prop-types";
 //     imgLink: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHByb2R1Y3RzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=400&q=60"
 //   }
 // ];
-
-function ProductList(props) {
-  return (
-    <React.Fragment>
-      {props.productList.map((product, index) =>
-        <Tile price={product.price}
-          quantity={product.quantity}
-          imgLink={product.imgLink}
-          name={product.name}
-          key={index} />
-      )}
-    </React.Fragment>
-  );
-}
-
-ProductList.propTypes = {
-  productList: PropTypes.array
-};
-
-export default ProductList;

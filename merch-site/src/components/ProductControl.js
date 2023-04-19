@@ -26,6 +26,30 @@ class ProductControl extends React.Component {
     });
   };
 
+  handleAddProductToCart = (id) => {
+    
+    const updatedProduct = this.state.mainProductList.find((obj) => obj.id === id);
+    updatedProduct.quantity -= 1;
+
+    const index = this.state.mainProductList.indexOf(updatedProduct);
+    console.log("The index is: " + index)
+
+    const updatedMainProductList = this.state.mainProductList.filter((obj) => obj.id !== id);
+    updatedMainProductList.splice( index, 0, updatedProduct)
+
+    this.setState({
+      mainProductList: updatedMainProductList,
+    })
+  };
+
+  handleDeleteProduct = (id) => {
+    const updatedMainProductList = this.state.mainProductList.filter((obj) => obj.id !== id);
+    this.setState({
+      mainProductList: updatedMainProductList,
+    })
+  };
+
+
   render() {
     let currentlyVisibleState = null;
     let buttonText = null;
@@ -33,7 +57,7 @@ class ProductControl extends React.Component {
       currentlyVisibleState = <NewProductForm onNewProductCreation={this.handleAddingNewProductToList} />;
       buttonText = "Return to Product List";
     } else {
-      currentlyVisibleState = <ProductList productList={this.state.mainProductList} />;
+      currentlyVisibleState = <ProductList productList={this.state.mainProductList} onAddProductToCart={this.handleAddProductToCart} onDeleteProduct={this.handleDeleteProduct} />;
       buttonText = "Add Product";
     }
     return (
