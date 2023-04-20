@@ -6,13 +6,15 @@ import PropTypes from "prop-types";
 function ProductList(props) {
   return (
     <React.Fragment>
-      {props.productList.map((product, index) =>
-        <Tile price={product.price}
+      {props.productList.map((product) =>
+        <Tile
+          whenProductClicked={props.onProductSelection}
+          price={product.price}
           quantity={product.quantity}
           imgLink={product.imgLink}
           name={product.name}
           id={product.id}
-          key={index}
+          key={product.id}
           onAddProductToCart={props.onAddProductToCart}
           onDeleteProduct={props.onDeleteProduct}
         />

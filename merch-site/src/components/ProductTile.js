@@ -17,15 +17,15 @@ function Tile(props) {
 
   return (
     <React.Fragment>
-      <form>
+      <div>
         <button onClick={handleAddToCart}>Buy</button>
         <button onClick={handleDelete}>Delete</button>
         <h4>{props.name}</h4>
         <p><span> Price: ${props.price} </span><br />
           <span> Quantity in stock: {props.quantity}</span></p>
-        <img src={props.imgLink} />
+        <img onClick = {() => props.whenProductClicked(props.id)} src={props.imgLink} />
         <p> id: {props.id}</p>
-      </form>
+      </div>
     </React.Fragment>
   );
 

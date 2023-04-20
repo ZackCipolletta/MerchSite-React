@@ -8,7 +8,7 @@ function App() {
       <Header />
       <ProductControl />
     </React.Fragment>
-  );
+  )
 }
 
 export default App;
