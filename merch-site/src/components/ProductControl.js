@@ -3,6 +3,7 @@ import NewProductForm from "./NewProductForm";
 import ProductDetail from "./ProductDetail";
 import ProductList from "./ProductList";
 import UpdateProductForm from "./UpdateProductForm";
+import Cart from "./Cart";
 
 class ProductControl extends React.Component {
 
@@ -11,7 +12,9 @@ class ProductControl extends React.Component {
     this.state = {
       formVisibleOnPage: false,
       mainProductList: [],
-      editing: false
+      editing: false,
+      cartList: [],
+      cartVisible: false
     };
   }
 
@@ -20,12 +23,19 @@ class ProductControl extends React.Component {
     this.setState({ editing: true });
   };
 
+  handleCartClick = () => {
+    console.log("handleCartClick reached!" + this.state.cartList);
+    console.log(this.state.cartList);
+    this.setState({ cartVisible: true });
+  };
+
   handleClick = () => {
-    if (this.state.selectedProduct != null) {
+    if (this.state.selectedProduct != null || this.state.cartVisible) {
       this.setState({
         formVisibleOnPage: false,
         selectedProduct: null,
-        editing: false
+        editing: false,
+        cartVisible: false
       });
     } else {
       this.setState(prevState => ({
@@ -44,8 +54,8 @@ class ProductControl extends React.Component {
 
   handleChangingSelectedProduct = (id) => {
     const selectedProduct = this.state.mainProductList.filter(product => product.id === id)[0];
-    console.log("image clicked. id: " + id)
-    console.log(selectedProduct)
+    console.log("image clicked. id: " + id);
+    console.log(selectedProduct);
     this.setState({ selectedProduct: selectedProduct });
   };
 
@@ -61,26 +71,50 @@ class ProductControl extends React.Component {
   };
 
   handleAddProductToCart = (id) => {
-
-    const updatedProduct = this.state.mainProductList.find((obj) => obj.id === id);
-    updatedProduct.quantity -= 1;
-
-    const index = this.state.mainProductList.indexOf(updatedProduct);
-    console.log("The index is: " + index);
-
-    const updatedMainProductList = this.state.mainProductList.filter((obj) => obj.id !== id);
-    updatedMainProductList.splice(index, 0, updatedProduct);
-
-    this.setState({
-      mainProductList: updatedMainProductList,
-    });
+    if (this.state.cartVisible) {
+      // const buyProduct = this.state.cartList.find((obj) => obj.id === id);
+      const newCartList = this.state.cartList.filter(product => product.index === id);
+      this.state({ cartList: newCartList })
+      
+    } else {
+      const cartProduct = this.state.mainProductList.find((obj) => obj.id === id);
+      const newCartList = this.state.cartList;
+      newCartList.push(cartProduct);
+      this.setState({
+        cartList: newCartList,
+      });
+    }
   };
 
+
+  // handleAddProductToCart = (id) => {
+
+  //   const updatedProduct = this.state.mainProductList.find((obj) => obj.id === id);
+  //   updatedProduct.quantity -= 1;
+
+  //   const index = this.state.mainProductList.indexOf(updatedProduct);
+  //   console.log("The index is: " + index);
+
+  //   const updatedMainProductList = this.state.mainProductList.filter((obj) => obj.id !== id);
+  //   updatedMainProductList.splice(index, 0, updatedProduct);
+
+  //   this.setState({
+  //     mainProductList: updatedMainProductList,
+  //   });
+  // };
+
   handleDeleteProduct = (id) => {
-    const updatedMainProductList = this.state.mainProductList.filter((obj) => obj.id !== id);
-    this.setState({
-      mainProductList: updatedMainProductList,
-    });
+    if (this.state.cartVisible) {
+      const updatedCarttList = this.state.cartList.filter((obj) => obj.id !== id);
+      this.setState({
+        cartList: updatedCarttList
+      });
+    } else {
+      const updatedMainProductList = this.state.mainProductList.filter((obj) => obj.id !== id);
+      this.setState({
+        mainProductList: updatedMainProductList,
+      });
+    }
   };
 
 
@@ -90,15 +124,20 @@ class ProductControl extends React.Component {
 
     if (this.state.editing) {
       currentlyVisibleState = <UpdateProductForm product={this.state.selectedProduct}
-        onEditProduct={this.handleEditingProductInList}
-        buttonText="Return to Product List" />;
+        onEditProduct={this.handleEditingProductInList} />;
+      buttonText = "Return to Product List";
+    }
+    else if (this.state.cartVisible) {
+      currentlyVisibleState = <Cart cartList={this.state.cartList}
+        onDeleteProduct={this.handleDeleteProduct} />;
+      buttonText = "Return to Product List";
     }
     else if (this.state.selectedProduct != null) {
       currentlyVisibleState =
         <ProductDetail product={this.state.selectedProduct}
           onDeleteProduct={this.handleDeleteProduct}
-        onClickingEdit={this.handleEditClick} />
-      buttonText ="Return to Product List";
+          onClickingEdit={this.handleEditClick} />;
+      buttonText = "Return to Product List";
     }
     else if (this.state.mainProductList.length === 0 || this.state.formVisibleOnPage) {
       currentlyVisibleState =
@@ -110,7 +149,8 @@ class ProductControl extends React.Component {
       currentlyVisibleState = <ProductList productList={this.state.mainProductList}
         onProductSelection={this.handleChangingSelectedProduct}
         onAddProductToCart={this.handleAddProductToCart}
-        onDeleteProduct={this.handleDeleteProduct} />;
+        onDeleteProduct={this.handleDeleteProduct}
+        onShowCart={this.handleCartClick} />;
       buttonText = "Add Product";
     }
     return (

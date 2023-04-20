@@ -9,11 +9,11 @@ function Cart(props) {
       {props.cartList.map((product) =>
         <Tile
           price={product.price}
-          quantity={product.quantity}
           imgLink={product.imgLink}
           name={product.name}
           id={product.id}
           key={product.id}
+          onDeleteProduct={props.onDeleteProduct}
         />
       )}
     </React.Fragment>

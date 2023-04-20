@@ -4,8 +4,14 @@ import PropTypes from "prop-types";
 
 
 function ProductList(props) {
+
+  function handleShowCart() {
+    props.onShowCart(props);
+  }
+
   return (
     <React.Fragment>
+      <button onClick={handleShowCart}>Cart</button>
       {props.productList.map((product) =>
         <Tile
           whenProductClicked={props.onProductSelection}
@@ -24,7 +30,8 @@ function ProductList(props) {
 }
 
 ProductList.propTypes = {
-  productList: PropTypes.array
+  productList: PropTypes.array,
+  handleShowCart: PropTypes.func
 };
 
 export default ProductList;

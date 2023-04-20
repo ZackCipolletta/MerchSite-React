@@ -22,8 +22,8 @@ function Tile(props) {
         <button onClick={handleDelete}>Delete</button>
         <h4>{props.name}</h4>
         <p><span> Price: ${props.price} </span><br />
-          <span> Quantity in stock: {props.quantity}</span></p>
-        <img onClick = {() => props.whenProductClicked(props.id)} src={props.imgLink} />
+          <span id="quantity"> Quantity in stock: {props.quantity}</span></p>
+        <img onClick={() => props.whenProductClicked(props.id)} src={props.imgLink} />
         <p> id: {props.id}</p>
       </div>
     </React.Fragment>
