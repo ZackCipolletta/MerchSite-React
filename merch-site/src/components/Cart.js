@@ -14,6 +14,7 @@ function Cart(props) {
           id={product.id}
           key={product.id}
           onDeleteProduct={props.onDeleteProduct}
+          onAddProductToCart={props.onAddProductToCart}
         />
       )}
     </React.Fragment>

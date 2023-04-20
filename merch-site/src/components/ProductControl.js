@@ -73,9 +73,31 @@ class ProductControl extends React.Component {
   handleAddProductToCart = (id) => {
     if (this.state.cartVisible) {
       // const buyProduct = this.state.cartList.find((obj) => obj.id === id);
-      const newCartList = this.state.cartList.filter(product => product.index === id);
-      this.state({ cartList: newCartList })
-      
+      const updatedCarttList = this.state.cartList.filter((obj) => obj.id !== id);
+      this.setState({
+        cartList: updatedCarttList
+      });
+
+        const updatedCartProduct = this.state.mainProductList.find((obj) => obj.id === id);
+
+        const indexCart = this.state.cartList.indexOf(updatedCartProduct);
+        console.log("The index is: " + indexCart);
+
+        const updatedProduct = this.state.mainProductList.find((obj) => obj.id === id);
+        updatedProduct.quantity -= 1;
+
+        const index = this.state.mainProductList.indexOf(updatedProduct);
+        console.log("The index is: " + index);
+
+        const updatedMainProductList = this.state.mainProductList.filter((obj) => obj.id !== id);
+        updatedMainProductList.splice(index, 0, updatedProduct);
+
+        this.setState({
+          mainProductList: updatedMainProductList,
+          cartVisible: false
+      })
+  
+
     } else {
       const cartProduct = this.state.mainProductList.find((obj) => obj.id === id);
       const newCartList = this.state.cartList;
@@ -86,22 +108,6 @@ class ProductControl extends React.Component {
     }
   };
 
-
-  // handleAddProductToCart = (id) => {
-
-  //   const updatedProduct = this.state.mainProductList.find((obj) => obj.id === id);
-  //   updatedProduct.quantity -= 1;
-
-  //   const index = this.state.mainProductList.indexOf(updatedProduct);
-  //   console.log("The index is: " + index);
-
-  //   const updatedMainProductList = this.state.mainProductList.filter((obj) => obj.id !== id);
-  //   updatedMainProductList.splice(index, 0, updatedProduct);
-
-  //   this.setState({
-  //     mainProductList: updatedMainProductList,
-  //   });
-  // };
 
   handleDeleteProduct = (id) => {
     if (this.state.cartVisible) {
@@ -129,7 +135,9 @@ class ProductControl extends React.Component {
     }
     else if (this.state.cartVisible) {
       currentlyVisibleState = <Cart cartList={this.state.cartList}
-        onDeleteProduct={this.handleDeleteProduct} />;
+        onDeleteProduct={this.handleDeleteProduct}
+        onAddProductToCart={this.handleAddProductToCart}
+      />;
       buttonText = "Return to Product List";
     }
     else if (this.state.selectedProduct != null) {
@@ -160,7 +168,25 @@ class ProductControl extends React.Component {
       </React.Fragment>
     );
   }
-
 }
 
 export default ProductControl;
+
+
+
+
+  // handleAddProductToCart = (id) => {
+
+  //   const updatedProduct = this.state.mainProductList.find((obj) => obj.id === id);
+  //   updatedProduct.quantity -= 1;
+
+  //   const index = this.state.mainProductList.indexOf(updatedProduct);
+  //   console.log("The index is: " + index);
+
+  //   const updatedMainProductList = this.state.mainProductList.filter((obj) => obj.id !== id);
+  //   updatedMainProductList.splice(index, 0, updatedProduct);
+
+  //   this.setState({
+  //     mainProductList: updatedMainProductList,
+  //   });
+  // };
