@@ -28,7 +28,7 @@ function ReusableProductForm(props) {
 }
 
 ReusableProductForm.propTypes = {
-  onNewProductCreation: PropTypes.func,
+  formSubmissionHandler: PropTypes.func,
   buttonText: PropTypes.string
 };
 
