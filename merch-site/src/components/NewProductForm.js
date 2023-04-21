@@ -16,7 +16,6 @@ function ProductForm(props) {
     });
   }
 
-
   return (
     <React.Fragment>
       <h1>Create New product here</h1>

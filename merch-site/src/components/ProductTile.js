@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-
-
 function Tile(props) {
 
   function handleAddToCart(event) {
@@ -28,7 +26,6 @@ function Tile(props) {
       </div>
     </React.Fragment>
   );
-
 }
 
 Tile.propTypes = {

@@ -77,26 +77,19 @@ class ProductControl extends React.Component {
       this.setState({
         cartList: updatedCarttList
       });
-
-        const updatedCartProduct = this.state.mainProductList.find((obj) => obj.id === id);
-
-        const indexCart = this.state.cartList.indexOf(updatedCartProduct);
-        console.log("The index is: " + indexCart);
-
-        const updatedProduct = this.state.mainProductList.find((obj) => obj.id === id);
-        updatedProduct.quantity -= 1;
-
-        const index = this.state.mainProductList.indexOf(updatedProduct);
-        console.log("The index is: " + index);
-
-        const updatedMainProductList = this.state.mainProductList.filter((obj) => obj.id !== id);
-        updatedMainProductList.splice(index, 0, updatedProduct);
-
-        this.setState({
-          mainProductList: updatedMainProductList,
-          cartVisible: false
-      })
-  
+      const updatedCartProduct = this.state.mainProductList.find((obj) => obj.id === id);
+      const indexCart = this.state.cartList.indexOf(updatedCartProduct);
+      console.log("The index is: " + indexCart);
+      const updatedProduct = this.state.mainProductList.find((obj) => obj.id === id);
+      updatedProduct.quantity -= 1;
+      const index = this.state.mainProductList.indexOf(updatedProduct);
+      console.log("The index is: " + index);
+      const updatedMainProductList = this.state.mainProductList.filter((obj) => obj.id !== id);
+      updatedMainProductList.splice(index, 0, updatedProduct);
+      this.setState({
+        mainProductList: updatedMainProductList,
+        cartVisible: false
+      });
 
     } else {
       const cartProduct = this.state.mainProductList.find((obj) => obj.id === id);
@@ -107,7 +100,6 @@ class ProductControl extends React.Component {
       });
     }
   };
-
 
   handleDeleteProduct = (id) => {
     if (this.state.cartVisible) {
@@ -122,7 +114,6 @@ class ProductControl extends React.Component {
       });
     }
   };
-
 
   render() {
     let currentlyVisibleState = null;
