@@ -70,10 +70,4 @@ describe('productListReducer', () => {
     });
   });
 
-
-
-
-
-
-
 });

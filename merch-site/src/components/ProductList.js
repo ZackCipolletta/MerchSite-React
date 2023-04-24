@@ -12,7 +12,7 @@ function ProductList(props) {
   return (
     <React.Fragment>
       <button onClick={handleShowCart}>Cart</button>
-      {props.productList.map((product) =>
+      {Object.values(props.productList).map((product) =>
         <Tile
           whenProductClicked={props.onProductSelection}
           price={product.price}
@@ -30,7 +30,7 @@ function ProductList(props) {
 }
 
 ProductList.propTypes = {
-  productList: PropTypes.array,
+  productList: PropTypes.object,
   handleShowCart: PropTypes.func
 };
 
